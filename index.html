@@ -750,6 +750,21 @@ nav.tabs::-webkit-scrollbar { display: none; }
   backdrop-filter: blur(16px);
 }
 .play-btn.slow:hover { border-color: var(--gold); color: var(--gold); }
+.play-btn.loading {
+  pointer-events: none;
+  opacity: 0.7;
+  position: relative;
+}
+.play-btn.loading::after {
+  content: "";
+  width: 12px; height: 12px;
+  border: 1.5px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin-left: 4px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── Rate buttons ─────────────────────────────────────────────── */
 .rate-row {
@@ -1248,9 +1263,35 @@ nav.tabs::-webkit-scrollbar { display: none; }
   <!-- ── Voice panel ──────────────────────────────────────────── -->
   <div class="voice-panel hidden" id="voicePanel">
     <div class="vp-row">
+      <label class="vp-lbl" for="providerSelect">Provider</label>
+      <select class="vp-select" id="providerSelect">
+        <option value="browser">Browser (built-in)</option>
+        <option value="openai">OpenAI · gpt-4o-mini-tts</option>
+        <option value="elevenlabs">ElevenLabs · multilingual v2</option>
+        <option value="azure">Azure · neural (ar-EG)</option>
+      </select>
+    </div>
+
+    <!-- Browser voice picker (shown for provider=browser) -->
+    <div class="vp-row" data-only="browser">
       <label class="vp-lbl" for="voiceSelect">Voice</label>
       <select class="vp-select" id="voiceSelect"></select>
     </div>
+
+    <!-- Cloud provider fields (shown when a cloud provider is picked) -->
+    <div class="vp-row" data-only="cloud">
+      <label class="vp-lbl" for="apiKeyInput">API key</label>
+      <input class="vp-select" id="apiKeyInput" type="password" autocomplete="off" placeholder="Stored in your browser only" />
+    </div>
+    <div class="vp-row" data-only="cloud">
+      <label class="vp-lbl" for="cloudVoiceInput">Voice</label>
+      <input class="vp-select" id="cloudVoiceInput" type="text" placeholder="e.g. alloy · nova · Rachel · ar-EG-SalmaNeural" />
+    </div>
+    <div class="vp-row" data-only="azure">
+      <label class="vp-lbl" for="azureRegionInput">Region</label>
+      <input class="vp-select" id="azureRegionInput" type="text" placeholder="e.g. eastus · westeurope" />
+    </div>
+
     <div class="vp-row">
       <label class="vp-lbl" for="rateRange">Rate <span class="vp-val" id="rateVal">0.80</span></label>
       <input class="vp-range" id="rateRange" type="range" min="0.5" max="1.1" step="0.05" value="0.8" />
@@ -1490,6 +1531,10 @@ nav.tabs::-webkit-scrollbar { display: none; }
     activeCat: 'All', theme: null,
     typeIdx: 0, sentenceIdx: 0, learnIdx: 0,
     voiceURI: null, rate: 0.8,
+    ttsProvider: 'browser',
+    apiKeys: { openai: '', elevenlabs: '', azure: '' },
+    cloudVoice: { openai: 'nova', elevenlabs: '21m00Tcm4TlvDq8ikWAM', azure: 'ar-EG-SalmaNeural' },
+    azureRegion: 'eastus',
   };
   let S;
   try { S = Object.assign({}, defaultState, JSON.parse(localStorage.getItem(STATE_KEY) || '{}')); }
@@ -1609,7 +1654,7 @@ nav.tabs::-webkit-scrollbar { display: none; }
   };
   document.getElementById('modalClose').onclick = () => document.getElementById('modal').classList.remove('show');
 
-  // ── TTS ──────────────────────────────────────────────────────
+  // ── TTS: browser voices ──────────────────────────────────────
   let voices = [];
   const PREFERRED = [
     /microsoft.*(salma|shakir|hoda|naayf).*(online|natural|neural)/i,
@@ -1700,7 +1745,8 @@ nav.tabs::-webkit-scrollbar { display: none; }
   }
 
   const chunkArabic = (text) => text.split(/([،؛؟!.·—\-]|\s{2,})/).map(s => s && s.trim()).filter(Boolean);
-  const speak = (text, opts = {}) => {
+
+  const speakBrowser = (text, opts = {}) => {
     if (!('speechSynthesis' in window)) return;
     try {
       speechSynthesis.cancel();
@@ -1720,13 +1766,202 @@ nav.tabs::-webkit-scrollbar { display: none; }
       speakOne(0);
     } catch {}
   };
+
+  // ── TTS: cloud providers (real neural voices) ────────────────
+  // Cache blob URLs by "provider:voice:rate:text" so replays are instant
+  const audioCache = new Map();
+  let currentAudio = null;
+
+  const cacheKey = (provider, voice, rate, text) => provider + ':' + voice + ':' + rate + ':' + text;
+
+  const cloudFetch = async (provider, text, opts = {}) => {
+    const rate = opts.slow ? 0.75 : 1.0; // most APIs speak at a natural rate; slow is a mild slowdown
+    if (provider === 'openai') {
+      const key = S.apiKeys.openai;
+      const voice = S.cloudVoice.openai || 'nova';
+      if (!key) throw new Error('OpenAI API key missing');
+      const res = await fetch('https://api.openai.com/v1/audio/speech', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + key,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini-tts',
+          voice: voice,
+          input: text,
+          instructions: 'Speak in Egyptian Arabic (Masri) dialect, warm and natural pace' + (opts.slow ? ', slightly slower for a language learner' : ''),
+          speed: rate,
+        }),
+      });
+      if (!res.ok) throw new Error('OpenAI ' + res.status);
+      return await res.blob();
+    }
+    if (provider === 'elevenlabs') {
+      const key = S.apiKeys.elevenlabs;
+      const voiceId = S.cloudVoice.elevenlabs || '21m00Tcm4TlvDq8ikWAM';
+      if (!key) throw new Error('ElevenLabs API key missing');
+      const res = await fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voiceId, {
+        method: 'POST',
+        headers: {
+          'xi-api-key': key,
+          'Content-Type': 'application/json',
+          'Accept': 'audio/mpeg',
+        },
+        body: JSON.stringify({
+          text: text,
+          model_id: 'eleven_multilingual_v2',
+          voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0.15, use_speaker_boost: true },
+        }),
+      });
+      if (!res.ok) throw new Error('ElevenLabs ' + res.status);
+      return await res.blob();
+    }
+    if (provider === 'azure') {
+      const key = S.apiKeys.azure;
+      const region = S.azureRegion || 'eastus';
+      const voice = S.cloudVoice.azure || 'ar-EG-SalmaNeural';
+      if (!key) throw new Error('Azure API key missing');
+      const ssml = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="ar-EG">' +
+        '<voice name="' + voice + '">' +
+        (opts.slow ? '<prosody rate="-20%">' + text + '</prosody>' : text) +
+        '</voice></speak>';
+      const res = await fetch('https://' + region + '.tts.speech.microsoft.com/cognitiveservices/v1', {
+        method: 'POST',
+        headers: {
+          'Ocp-Apim-Subscription-Key': key,
+          'Content-Type': 'application/ssml+xml',
+          'X-Microsoft-OutputFormat': 'audio-24khz-48kbitrate-mono-mp3',
+          'User-Agent': 'masri-app',
+        },
+        body: ssml,
+      });
+      if (!res.ok) throw new Error('Azure ' + res.status);
+      return await res.blob();
+    }
+    throw new Error('Unknown provider ' + provider);
+  };
+
+  const playBlob = (blob) => new Promise((resolve, reject) => {
+    if (currentAudio) { currentAudio.pause(); currentAudio.src = ''; }
+    const url = URL.createObjectURL(blob);
+    const audio = new Audio(url);
+    currentAudio = audio;
+    audio.onended = resolve;
+    audio.onerror = reject;
+    audio.play().catch(reject);
+  });
+
+  const speak = async (text, opts = {}) => {
+    const provider = S.ttsProvider || 'browser';
+    if (provider === 'browser') return speakBrowser(text, opts);
+
+    // Cloud path
+    const voice =
+      provider === 'openai' ? (S.cloudVoice.openai || 'nova') :
+      provider === 'elevenlabs' ? (S.cloudVoice.elevenlabs || '') :
+      provider === 'azure' ? (S.cloudVoice.azure || 'ar-EG-SalmaNeural') : '';
+    const rate = opts.slow ? 'slow' : 'normal';
+    const key = cacheKey(provider, voice, rate, text);
+    try {
+      let blob = audioCache.get(key);
+      if (!blob) {
+        // Show loading state on active play buttons
+        document.querySelectorAll('.play-btn').forEach(b => b.classList.add('loading'));
+        blob = await cloudFetch(provider, text, opts);
+        audioCache.set(key, blob);
+      }
+      document.querySelectorAll('.play-btn').forEach(b => b.classList.remove('loading'));
+      await playBlob(blob);
+    } catch (err) {
+      document.querySelectorAll('.play-btn').forEach(b => b.classList.remove('loading'));
+      // Graceful fallback to browser TTS + one-line toast
+      const msg = String(err && err.message || err);
+      if (/401|403|missing/i.test(msg)) toast('Cloud TTS auth failed · using browser');
+      else if (/blocked|network|Failed to fetch/i.test(msg)) toast('Cloud TTS unreachable · using browser');
+      else toast('Cloud TTS: ' + msg + ' · using browser');
+      speakBrowser(text, opts);
+    }
+  };
   const speakSlow = (text) => speak(text, { slow: true });
 
+  // ── Voice panel wiring ───────────────────────────────────────
   const voicePanel = document.getElementById('voicePanel');
+  const providerSelect = document.getElementById('providerSelect');
+  const apiKeyInput = document.getElementById('apiKeyInput');
+  const cloudVoiceInput = document.getElementById('cloudVoiceInput');
+  const azureRegionInput = document.getElementById('azureRegionInput');
+
+  const providerRows = () => voicePanel.querySelectorAll('[data-only]');
+  const refreshProviderRows = () => {
+    const p = S.ttsProvider || 'browser';
+    providerRows().forEach(row => {
+      const only = row.dataset.only;
+      const show = (only === 'browser' && p === 'browser')
+        || (only === 'cloud' && p !== 'browser')
+        || (only === 'azure' && p === 'azure');
+      row.classList.toggle('hidden', !show);
+    });
+    if (p !== 'browser') {
+      apiKeyInput.value = S.apiKeys[p] || '';
+      cloudVoiceInput.value = S.cloudVoice[p] || '';
+      const placeholders = {
+        openai: 'e.g. nova · alloy · shimmer · echo',
+        elevenlabs: 'ElevenLabs voice id (e.g. 21m00Tcm4TlvDq8ikWAM)',
+        azure: 'e.g. ar-EG-SalmaNeural · ar-EG-ShakirNeural',
+      };
+      cloudVoiceInput.placeholder = placeholders[p] || '';
+    }
+    if (p === 'azure') azureRegionInput.value = S.azureRegion || 'eastus';
+  };
+
+  const providerNote = () => {
+    const note = document.getElementById('voiceNote');
+    const p = S.ttsProvider || 'browser';
+    if (p === 'browser') return; // browser path handles its own note
+    const hasKey = !!(S.apiKeys[p] || '').trim();
+    if (!hasKey) {
+      note.className = 'vp-note warn';
+      note.innerHTML = 'Add your <b>' + p + '</b> API key to enable neural TTS. Keys are stored in your browser only.';
+    } else {
+      note.className = 'vp-note';
+      const provName = { openai: 'OpenAI', elevenlabs: 'ElevenLabs', azure: 'Azure' }[p];
+      note.innerHTML = '<b>' + provName + ' neural</b> · genuinely good Arabic. Audio is cached in-memory per session.';
+    }
+  };
+
   document.getElementById('voiceBtn').onclick = () => {
     voicePanel.classList.toggle('hidden');
-    if (!voicePanel.classList.contains('hidden')) renderVoicePanel();
+    if (!voicePanel.classList.contains('hidden')) {
+      refreshProviderRows();
+      renderVoicePanel();
+      providerNote();
+    }
   };
+  providerSelect.addEventListener('change', (e) => {
+    S.ttsProvider = e.target.value;
+    save();
+    refreshProviderRows();
+    renderVoicePanel();
+    providerNote();
+  });
+  apiKeyInput.addEventListener('input', (e) => {
+    const p = S.ttsProvider;
+    if (p === 'browser') return;
+    S.apiKeys = { ...S.apiKeys, [p]: e.target.value };
+    save();
+    providerNote();
+  });
+  cloudVoiceInput.addEventListener('input', (e) => {
+    const p = S.ttsProvider;
+    if (p === 'browser') return;
+    S.cloudVoice = { ...S.cloudVoice, [p]: e.target.value };
+    save();
+  });
+  azureRegionInput.addEventListener('input', (e) => {
+    S.azureRegion = e.target.value;
+    save();
+  });
   document.getElementById('voiceSelect').addEventListener('change', (e) => {
     S.voiceURI = e.target.value || null; save(); renderVoicePanel();
   });
@@ -1736,6 +1971,9 @@ nav.tabs::-webkit-scrollbar { display: none; }
     save();
   });
   document.getElementById('voiceTest').onclick = () => speak('قهوة بسكر من فضلك');
+
+  // Initial provider dropdown state
+  providerSelect.value = S.ttsProvider || 'browser';
 
   const showPanel = (name) => {
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.panel === name));
