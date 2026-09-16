@@ -1,0 +1,1116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Masri — Egyptian Arabic Vocab (Michel Thomas)</title>
+<meta name="description" content="Learn every word from the Michel Thomas Foundation Egyptian Arabic podcast: flashcards, quizzes, sentences, audio." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #FBF5EA;
+    --bg-warm: #F3E7D0;
+    --ink: #1E2A2E;
+    --muted: #7B6B58;
+    --line: #E7DAC2;
+    --card: #FFFFFF;
+    --primary: #C64F1F;
+    --primary-ink: #8A3413;
+    --teal: #0F5E5C;
+    --gold: #D4A24C;
+    --gold-soft: #F0D9A8;
+    --ok: #2E7D5B;
+    --bad: #B33A2A;
+    --shadow-sm: 0 1px 2px rgba(30,42,46,0.06), 0 2px 6px rgba(30,42,46,0.05);
+    --shadow-md: 0 4px 14px rgba(30,42,46,0.09), 0 10px 30px rgba(30,42,46,0.06);
+    --shadow-lg: 0 12px 40px rgba(30,42,46,0.14);
+    --r-sm: 8px;
+    --r-md: 14px;
+    --r-lg: 22px;
+    --r-xl: 32px;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg: #14181C;
+      --bg-warm: #1B2126;
+      --ink: #F1E9DA;
+      --muted: #A99E86;
+      --line: #2D343A;
+      --card: #1F262C;
+      --primary: #E97A44;
+      --primary-ink: #F5A170;
+      --teal: #52B8AF;
+      --gold: #E4B968;
+      --gold-soft: #4A3D22;
+      --ok: #5FBF8C;
+      --bad: #E27462;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.3), 0 2px 6px rgba(0,0,0,.25);
+      --shadow-md: 0 4px 14px rgba(0,0,0,.45), 0 10px 30px rgba(0,0,0,.35);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,.55);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14181C;
+    --bg-warm: #1B2126;
+    --ink: #F1E9DA;
+    --muted: #A99E86;
+    --line: #2D343A;
+    --card: #1F262C;
+    --primary: #E97A44;
+    --primary-ink: #F5A170;
+    --teal: #52B8AF;
+    --gold: #E4B968;
+    --gold-soft: #4A3D22;
+    --ok: #5FBF8C;
+    --bad: #E27462;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.3), 0 2px 6px rgba(0,0,0,.25);
+    --shadow-md: 0 4px 14px rgba(0,0,0,.45), 0 10px 30px rgba(0,0,0,.35);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,.55);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .app {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 20px 16px 120px;
+  }
+
+  /* ── Header ─────────────────────────────────────────────────────── */
+  header {
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding: 6px 4px 20px;
+  }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .brand-mark {
+    width:44px; height:44px; border-radius:12px;
+    background: linear-gradient(135deg, var(--primary), var(--gold));
+    display:grid; place-items:center; color:white; font-weight:700;
+    font-family: 'Amiri', serif; font-size: 22px;
+    box-shadow: var(--shadow-md);
+  }
+  .brand-title { font-family: 'Fraunces', serif; font-weight:700; font-size:22px; letter-spacing:-0.01em; }
+  .brand-sub { font-size: 12px; color: var(--muted); margin-top:-2px; }
+  .stats { display:flex; gap:8px; align-items:center; }
+  .stat {
+    display:flex; align-items:center; gap:6px;
+    padding: 6px 10px; border-radius: 999px;
+    background: var(--card); border: 1px solid var(--line);
+    font-weight: 600; font-size: 13px; box-shadow: var(--shadow-sm);
+  }
+  .stat .ico { font-size: 14px; }
+  .stat.streak { color: var(--primary); }
+  .stat.xp { color: var(--teal); }
+  .theme-btn {
+    width:36px; height:36px; border-radius:10px; border:1px solid var(--line);
+    background: var(--card); color: var(--ink); cursor:pointer; box-shadow: var(--shadow-sm);
+  }
+
+  /* ── Tabs ──────────────────────────────────────────────────────── */
+  .tabs {
+    display:flex; gap:4px; padding:5px; background: var(--bg-warm);
+    border:1px solid var(--line); border-radius: 14px; margin-bottom: 20px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  .tab {
+    flex:1; min-width: fit-content; text-align:center; padding: 10px 12px;
+    border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 14px;
+    color: var(--muted); border:none; background: transparent; white-space: nowrap;
+    transition: all .18s ease;
+  }
+  .tab.active { background: var(--card); color: var(--ink); box-shadow: var(--shadow-sm); }
+  .tab:hover:not(.active) { color: var(--ink); }
+
+  /* ── Panels ────────────────────────────────────────────────────── */
+  .panel { display:none; animation: fade .25s ease; }
+  .panel.active { display:block; }
+  @keyframes fade { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+
+  /* Home dashboard */
+  .hero {
+    background: linear-gradient(135deg, var(--teal), #1a7370 60%, var(--primary));
+    color:white; border-radius: var(--r-xl); padding: 24px;
+    box-shadow: var(--shadow-md); position: relative; overflow: hidden;
+  }
+  .hero:before, .hero:after {
+    content:""; position:absolute; border-radius:50%; filter: blur(30px); opacity:.4;
+  }
+  .hero:before { width:180px; height:180px; background: var(--gold); top:-40px; right:-40px; }
+  .hero:after { width:200px; height:200px; background: var(--primary); bottom:-80px; left:-40px; }
+  .hero > * { position: relative; }
+  .hero-eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: 11px; opacity:.75; font-weight:600; }
+  .hero-title { font-family: 'Fraunces', serif; font-size: 30px; line-height: 1.15; margin: 6px 0 4px; font-weight: 700; }
+  .hero-title .ar { font-family: 'Amiri', serif; font-size: 34px; opacity:.95; margin-left:6px; }
+  .hero-desc { opacity: .85; font-size: 14px; max-width: 480px; }
+  .hero-cta { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+  .btn {
+    display:inline-flex; align-items:center; gap:8px; padding: 10px 16px;
+    border-radius: 999px; border:none; cursor:pointer; font-weight:600; font-size: 14px;
+    transition: transform .1s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn.primary { background: var(--gold); color: #2a1a00; }
+  .btn.ghost { background: rgba(255,255,255,.18); color:white; }
+  .btn.outline { background: var(--card); border: 1px solid var(--line); color: var(--ink); box-shadow: var(--shadow-sm); }
+
+  .cards-grid {
+    display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px; margin-top: 18px;
+  }
+  .stat-card {
+    background: var(--card); border:1px solid var(--line); border-radius: var(--r-md);
+    padding: 14px; box-shadow: var(--shadow-sm);
+  }
+  .stat-num { font-family: 'Fraunces', serif; font-size: 28px; font-weight:700; color: var(--ink); }
+  .stat-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top:2px; }
+  .stat-bar { height:6px; background: var(--bg-warm); border-radius: 4px; margin-top: 8px; overflow:hidden; }
+  .stat-bar > i { display:block; height:100%; background: linear-gradient(90deg, var(--primary), var(--gold)); border-radius:4px; }
+
+  .section-title { font-family: 'Fraunces', serif; font-size: 20px; margin: 24px 0 10px; }
+  .category-chips { display:flex; gap:8px; flex-wrap:wrap; }
+  .chip {
+    padding: 8px 14px; background: var(--card); border:1px solid var(--line);
+    border-radius: 999px; font-size: 13px; cursor:pointer; font-weight:500;
+    display:inline-flex; align-items:center; gap:6px; color: var(--ink);
+    box-shadow: var(--shadow-sm);
+  }
+  .chip .count { color: var(--muted); font-weight: 600; font-size: 12px; }
+  .chip.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .chip.active .count { color: var(--gold); }
+
+  /* ── Flashcard ─────────────────────────────────────────────────── */
+  .flash-wrap { perspective: 1400px; margin: 8px 0 16px; }
+  .flash {
+    position:relative; width:100%; aspect-ratio: 5/4; min-height: 320px;
+    transform-style: preserve-3d;
+    transition: transform .6s cubic-bezier(.22,1,.36,1);
+    cursor:pointer;
+  }
+  .flash.flipped { transform: rotateY(180deg); }
+  .face {
+    position:absolute; inset:0; backface-visibility: hidden;
+    background: var(--card); border:1px solid var(--line); border-radius: var(--r-xl);
+    box-shadow: var(--shadow-md);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding: 28px; text-align:center;
+  }
+  .face.back { transform: rotateY(180deg); background: linear-gradient(160deg, var(--card), var(--bg-warm)); }
+  .face .cat-tag {
+    position:absolute; top:16px; left:16px;
+    background: var(--gold-soft); color: var(--primary-ink);
+    padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700;
+    letter-spacing: .04em; text-transform: uppercase;
+  }
+  .face .idx {
+    position:absolute; top:16px; right:16px; font-size: 12px; color: var(--muted); font-weight: 600;
+  }
+  .face .word-en { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 700; line-height:1.1; color: var(--ink); }
+  .face .hint { color: var(--muted); font-size: 13px; margin-top: 14px; }
+  .face .word-ar { font-family: 'Amiri', serif; font-size: 56px; direction: rtl; color: var(--primary); line-height:1; }
+  .face .tl { font-family: 'Fraunces', serif; font-size: 22px; color: var(--teal); margin-top: 10px; font-weight: 600; }
+  .face .example {
+    margin-top: 20px; padding: 14px 16px; background: var(--bg-warm);
+    border-radius: var(--r-md); font-size: 14px; width: 100%; max-width: 460px;
+  }
+  .face .example .ex-ar { font-family: 'Amiri', serif; font-size: 20px; direction: rtl; color: var(--ink); margin-bottom: 6px; }
+  .face .example .ex-tl { color: var(--teal); font-style: italic; font-size: 13px; }
+  .face .example .ex-en { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  .speak-btn {
+    background: var(--primary); color:white; border:none; width:44px; height:44px;
+    border-radius:50%; cursor:pointer; display:grid; place-items:center;
+    box-shadow: var(--shadow-sm); margin-top:16px;
+  }
+  .speak-btn:hover { transform: scale(1.05); }
+
+  .flash-controls { display:flex; gap:10px; justify-content: space-between; margin-top: 14px; }
+  .flash-controls .btn { flex:1; justify-content:center; padding: 14px; font-size: 15px; }
+  .btn.know { background: var(--ok); color:white; }
+  .btn.again { background: var(--bad); color:white; }
+  .btn.skip  { background: var(--card); border:1px solid var(--line); color: var(--muted); }
+
+  /* ── Quiz ──────────────────────────────────────────────────────── */
+  .quiz-card {
+    background: var(--card); border:1px solid var(--line);
+    border-radius: var(--r-xl); padding: 28px; box-shadow: var(--shadow-md);
+  }
+  .quiz-prompt {
+    text-align:center; padding: 20px 0 28px;
+  }
+  .quiz-prompt .kind { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing:.1em; }
+  .quiz-prompt .word { font-family: 'Fraunces', serif; font-size: 40px; margin-top: 8px; font-weight: 700; line-height: 1.1; }
+  .quiz-prompt .word.ar { font-family: 'Amiri', serif; font-size: 52px; direction:rtl; color: var(--primary); }
+  .quiz-options { display:grid; gap:10px; }
+  .option {
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 14px 18px; background: var(--card); border:1.5px solid var(--line);
+    border-radius: var(--r-md); cursor:pointer; font-size: 16px; font-weight: 500;
+    transition: all .15s ease; color: var(--ink);
+  }
+  .option:hover:not(.correct):not(.wrong):not(.disabled) {
+    border-color: var(--teal); transform: translateX(2px);
+  }
+  .option.correct { background: rgba(46,125,91,.14); border-color: var(--ok); color: var(--ok); }
+  .option.wrong { background: rgba(179,58,42,.10); border-color: var(--bad); color: var(--bad); }
+  .option.disabled { pointer-events:none; opacity:.7; }
+  .option .kb { color: var(--muted); font-size: 12px; font-weight: 700; }
+  .option.ar { font-family: 'Amiri', serif; font-size: 22px; direction: rtl; }
+  .quiz-header {
+    display:flex; justify-content: space-between; align-items:center; margin-bottom: 10px;
+    font-size: 13px; color: var(--muted); font-weight: 600;
+  }
+  .progressbar { height:8px; background: var(--bg-warm); border-radius:6px; overflow:hidden; margin-bottom:16px; }
+  .progressbar > i { display:block; height:100%; background: linear-gradient(90deg, var(--teal), var(--primary)); transition: width .3s ease; }
+
+  /* ── Type mode ─────────────────────────────────────────────────── */
+  .type-input {
+    width: 100%; padding: 16px 18px; font-size: 20px; font-family: 'Fraunces', serif;
+    border-radius: var(--r-md); border: 1.5px solid var(--line); background: var(--card);
+    color: var(--ink); margin-top: 8px;
+  }
+  .type-input:focus { outline: none; border-color: var(--teal); }
+  .type-feedback { margin-top: 12px; padding: 12px 14px; border-radius: var(--r-md); font-size: 14px; display:none; }
+  .type-feedback.ok { background: rgba(46,125,91,.12); color: var(--ok); display:block; }
+  .type-feedback.bad { background: rgba(179,58,42,.10); color: var(--bad); display:block; }
+
+  /* ── Sentence mode ─────────────────────────────────────────────── */
+  .sentence-card {
+    background: var(--card); border:1px solid var(--line); border-radius: var(--r-lg);
+    padding: 22px; box-shadow: var(--shadow-md);
+  }
+  .sentence-word {
+    display:flex; align-items:center; justify-content:space-between; gap: 12px;
+    padding-bottom: 16px; border-bottom: 1px dashed var(--line); margin-bottom: 16px;
+  }
+  .sentence-word .en { font-family: 'Fraunces', serif; font-size: 22px; font-weight:700; }
+  .sentence-word .ar { font-family: 'Amiri', serif; font-size: 30px; color: var(--primary); direction:rtl; }
+  .sentence-word .tl { color: var(--teal); font-family: 'Fraunces', serif; font-weight: 600; }
+  .prompt-block {
+    background: linear-gradient(135deg, var(--bg-warm), var(--gold-soft));
+    padding: 16px; border-radius: var(--r-md); margin-bottom: 14px;
+  }
+  .prompt-block .lbl { text-transform:uppercase; font-size: 11px; letter-spacing: .1em; color: var(--muted); font-weight:700; }
+  .prompt-block .txt { font-family: 'Fraunces', serif; font-size: 18px; margin-top: 4px; }
+  .sentence-input {
+    width:100%; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: var(--r-md);
+    background: var(--card); color: var(--ink); font-family: 'Amiri', serif; font-size: 22px;
+    direction: rtl; min-height: 80px; resize: vertical;
+  }
+  .sentence-input:focus { outline: none; border-color: var(--primary); }
+  .sentence-actions { display: flex; gap: 8px; margin-top: 12px; }
+  .my-sentence {
+    padding: 10px 14px; background: var(--bg-warm); border-radius: var(--r-md); margin-top: 10px;
+    font-family: 'Amiri', serif; direction: rtl; font-size: 20px; position:relative;
+  }
+  .my-sentence .del { position:absolute; top:8px; left:8px; background:none; border:none; color: var(--muted); cursor:pointer; }
+
+  /* ── Browse ────────────────────────────────────────────────────── */
+  .search {
+    display: flex; gap:8px; margin-bottom: 12px;
+  }
+  .search input {
+    flex:1; padding: 12px 14px; border:1px solid var(--line); border-radius: var(--r-md);
+    background: var(--card); font-size: 15px; color: var(--ink);
+  }
+  .search input:focus { outline:none; border-color: var(--teal); }
+  .word-list { display:grid; gap:8px; }
+  .word-row {
+    display:grid; grid-template-columns: 1fr auto auto; gap:12px; align-items:center;
+    padding: 14px 16px; background: var(--card); border:1px solid var(--line);
+    border-radius: var(--r-md); cursor: pointer; transition: all .15s ease;
+  }
+  .word-row:hover { transform: translateX(3px); box-shadow: var(--shadow-sm); }
+  .word-row .top { display:flex; gap:10px; align-items:baseline; }
+  .word-row .en { font-family: 'Fraunces', serif; font-weight: 700; font-size: 16px; }
+  .word-row .tl { color: var(--teal); font-size: 13px; }
+  .word-row .ar { font-family: 'Amiri', serif; font-size: 22px; color: var(--primary); direction:rtl; }
+  .word-row .cat { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .word-row .mastery { width: 60px; text-align: right; font-size: 12px; color: var(--muted); }
+  .mastery-dots { display:inline-flex; gap:3px; }
+  .mastery-dots span { width:7px; height:7px; border-radius:50%; background: var(--line); }
+  .mastery-dots span.on { background: var(--primary); }
+
+  /* ── Empty & toasts ────────────────────────────────────────────── */
+  .empty {
+    padding: 40px 20px; text-align:center; color: var(--muted);
+    background: var(--card); border-radius: var(--r-lg); border:1px dashed var(--line);
+  }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(12px);
+    padding: 12px 20px; border-radius: 999px; background: var(--ink); color: var(--bg);
+    font-weight: 600; font-size: 14px; opacity: 0; pointer-events: none;
+    transition: all .3s cubic-bezier(.22,1,.36,1); z-index: 90;
+    box-shadow: var(--shadow-lg);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.gold { background: var(--gold); color: #2a1a00; }
+
+  /* Confetti burst */
+  .confetti {
+    position: fixed; inset: 0; pointer-events: none; z-index: 88; overflow: hidden;
+  }
+  .confetti i {
+    position: absolute; top:-10px; width:8px; height:14px; opacity: 0;
+    animation: fall 1.8s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity:1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* Level-up modal */
+  .modal {
+    position: fixed; inset: 0; background: rgba(30,42,46,.6); backdrop-filter: blur(6px);
+    display:none; align-items:center; justify-content:center; padding: 20px; z-index: 100;
+  }
+  .modal.show { display: flex; }
+  .modal-card {
+    background: var(--card); border-radius: var(--r-xl); padding: 28px;
+    max-width: 380px; width: 100%; text-align:center; box-shadow: var(--shadow-lg);
+    animation: pop .35s cubic-bezier(.22,1,.36,1);
+  }
+  @keyframes pop { from { transform: scale(.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-emoji { font-size: 56px; margin-bottom: 10px; }
+  .modal-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; }
+  .modal-desc { color: var(--muted); margin: 8px 0 20px; }
+
+  /* Small helpers */
+  .muted { color: var(--muted); }
+  .row { display:flex; gap:10px; align-items:center; }
+  .space { flex: 1; }
+  .footer-note {
+    text-align:center; color: var(--muted); font-size: 12px; padding-top: 24px;
+  }
+  .link { color: var(--teal); text-decoration: none; }
+  .link:hover { text-decoration: underline; }
+  .kbd {
+    display:inline-block; padding: 2px 6px; border-radius: 4px;
+    background: var(--bg-warm); font-family: ui-monospace, Menlo, monospace;
+    font-size: 11px; color: var(--muted); border:1px solid var(--line);
+  }
+
+  @media (max-width: 520px) {
+    .face .word-en { font-size: 32px; }
+    .face .word-ar { font-size: 42px; }
+    .hero-title { font-size: 24px; }
+    .quiz-prompt .word { font-size: 30px; }
+    .quiz-prompt .word.ar { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <div class="brand-mark">م</div>
+        <div>
+          <div class="brand-title">Masri</div>
+          <div class="brand-sub">Michel Thomas · Egyptian Arabic</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat streak" title="Daily streak"><span class="ico">🔥</span><span id="streakN">0</span></div>
+        <div class="stat xp" title="XP"><span class="ico">✦</span><span id="xpN">0</span></div>
+        <button class="theme-btn" id="themeBtn" title="Toggle theme">◐</button>
+      </div>
+    </header>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-panel="home">Home</button>
+      <button class="tab" data-panel="learn">Learn</button>
+      <button class="tab" data-panel="quiz">Quiz</button>
+      <button class="tab" data-panel="type">Type</button>
+      <button class="tab" data-panel="sentences">Sentences</button>
+      <button class="tab" data-panel="browse">Browse</button>
+    </nav>
+
+    <!-- ── HOME ─────────────────────────────────────────────────── -->
+    <section class="panel active" data-panel="home">
+      <div class="hero">
+        <div class="hero-eyebrow">Every word from the podcast</div>
+        <h1 class="hero-title">Learn Egyptian Arabic <span class="ar">مصري</span></h1>
+        <p class="hero-desc">A living deck built from Michel Thomas' Foundation Egyptian Arabic. Learn, quiz, write your own sentences, and hear every word out loud.</p>
+        <div class="hero-cta">
+          <button class="btn primary" data-goto="learn">Start learning →</button>
+          <button class="btn ghost" data-goto="quiz">Take a quiz</button>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <div class="stat-card">
+          <div class="stat-num" id="dashSeen">0</div>
+          <div class="stat-label">Words seen</div>
+          <div class="stat-bar"><i id="dashBarSeen" style="width:0%"></i></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="dashMastered">0</div>
+          <div class="stat-label">Mastered</div>
+          <div class="stat-bar"><i id="dashBarMastered" style="width:0%"></i></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="dashDue">0</div>
+          <div class="stat-label">Due to review</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="dashLevel">1</div>
+          <div class="stat-label">Level</div>
+        </div>
+      </div>
+
+      <h3 class="section-title">Pick a category</h3>
+      <div class="category-chips" id="homeChips"></div>
+
+      <h3 class="section-title">How this works</h3>
+      <div class="stat-card">
+        <div class="row" style="align-items:flex-start; gap: 16px;">
+          <div style="font-size:24px;">💡</div>
+          <div>
+            <b>Michel Thomas builds sentences from small pieces.</b> Each card here shows the English meaning, the Egyptian pronunciation (transliteration you can read), the Arabic script, and a real example sentence you can play out loud. Rate yourself honestly on each card — the app remembers what you struggle with and brings it back sooner.
+          </div>
+        </div>
+      </div>
+      <div class="footer-note">
+        Tip: press <span class="kbd">Space</span> to flip a card · <span class="kbd">1–4</span> to answer a quiz · <span class="kbd">→</span> next
+      </div>
+    </section>
+
+    <!-- ── LEARN (Flashcards) ────────────────────────────────────── -->
+    <section class="panel" data-panel="learn">
+      <div class="row" style="margin-bottom:12px;">
+        <div class="muted" id="learnMeta">Loading…</div>
+        <div class="space"></div>
+        <button class="btn outline" id="btnShuffle">🔀 Shuffle</button>
+        <button class="btn outline" id="btnFilter">Filter</button>
+      </div>
+      <div class="category-chips" id="learnChips" style="margin-bottom:12px; display:none;"></div>
+      <div class="progressbar"><i id="learnBar" style="width:0%"></i></div>
+
+      <div class="flash-wrap">
+        <div class="flash" id="flash">
+          <div class="face front">
+            <div class="cat-tag" id="fCat">Pronouns</div>
+            <div class="idx" id="fIdx">1 / 1</div>
+            <div class="word-en" id="fEn">tap to start</div>
+            <div class="hint">Tap card to flip · <span class="kbd">Space</span></div>
+          </div>
+          <div class="face back">
+            <div class="cat-tag" id="fCatBack">Pronouns</div>
+            <div class="idx" id="fIdxBack">1 / 1</div>
+            <div class="word-ar" id="fAr">—</div>
+            <div class="tl" id="fTl">—</div>
+            <button class="speak-btn" id="fSpeak" title="Hear it">🔊</button>
+            <div class="example" id="fEx" style="display:none;">
+              <div class="ex-ar" id="fExAr"></div>
+              <div class="ex-tl" id="fExTl"></div>
+              <div class="ex-en" id="fExEn"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flash-controls">
+        <button class="btn again" id="btnAgain">Again</button>
+        <button class="btn skip" id="btnHard">Hard</button>
+        <button class="btn know" id="btnGood">Got it</button>
+      </div>
+      <div class="footer-note">Rate honestly — cards you struggle with come back sooner.</div>
+    </section>
+
+    <!-- ── QUIZ ──────────────────────────────────────────────────── -->
+    <section class="panel" data-panel="quiz">
+      <div class="quiz-header">
+        <div>Question <span id="qNum">1</span> of <span id="qTotal">10</span></div>
+        <div>Score: <span id="qScore">0</span></div>
+      </div>
+      <div class="progressbar"><i id="quizBar" style="width:0%"></i></div>
+      <div class="quiz-card">
+        <div class="quiz-prompt">
+          <div class="kind" id="qKind">What does this mean?</div>
+          <div class="word" id="qWord">—</div>
+          <button class="speak-btn" id="qSpeak" style="display:none;">🔊</button>
+        </div>
+        <div class="quiz-options" id="qOpts"></div>
+      </div>
+      <div class="footer-note">Tip: press <span class="kbd">1</span>–<span class="kbd">4</span> to answer.</div>
+    </section>
+
+    <!-- ── TYPE ──────────────────────────────────────────────────── -->
+    <section class="panel" data-panel="type">
+      <div class="quiz-card">
+        <div class="quiz-prompt">
+          <div class="kind">Type the Egyptian Arabic transliteration</div>
+          <div class="word" id="tEn">—</div>
+          <div class="muted" id="tHint" style="margin-top:6px; font-size:13px;"></div>
+        </div>
+        <input class="type-input" id="tInput" placeholder="e.g. ahwa" autocomplete="off" spellcheck="false" />
+        <div class="type-feedback" id="tFb"></div>
+        <div style="display:flex; gap:8px; margin-top: 14px;">
+          <button class="btn outline" id="tHintBtn">Show hint</button>
+          <div class="space"></div>
+          <button class="btn primary" id="tCheck" style="background: var(--teal); color: white;">Check</button>
+          <button class="btn outline" id="tNext">Next →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SENTENCES ─────────────────────────────────────────────── -->
+    <section class="panel" data-panel="sentences">
+      <div class="row" style="margin-bottom: 12px;">
+        <div class="muted">Write a sentence using the word — the more you write, the faster it sticks.</div>
+      </div>
+      <div class="sentence-card" id="sentenceCard">
+        <div class="sentence-word">
+          <div>
+            <div class="en" id="sEn">—</div>
+            <div class="tl" id="sTl">—</div>
+          </div>
+          <div class="ar" id="sAr">—</div>
+        </div>
+        <div class="prompt-block">
+          <div class="lbl">Example from the podcast</div>
+          <div class="txt" id="sExampleAr" style="font-family:'Amiri',serif; direction:rtl;"></div>
+          <div class="muted" id="sExampleTl" style="font-style:italic; font-size:13px;"></div>
+          <div class="muted" id="sExampleEn" style="font-size:13px;"></div>
+          <button class="btn outline" id="sSpeakEx" style="margin-top: 10px;">🔊 Play example</button>
+        </div>
+        <label class="lbl muted" style="text-transform:uppercase; font-size: 11px; letter-spacing:.1em;">Your sentence (Arabic script or transliteration)</label>
+        <textarea class="sentence-input" id="sInput" placeholder="اكتب جملة..."></textarea>
+        <div class="sentence-actions">
+          <button class="btn outline" id="sSpeakMine">🔊 Hear mine</button>
+          <div class="space"></div>
+          <button class="btn outline" id="sPrev">← Prev word</button>
+          <button class="btn primary" id="sSave" style="background: var(--primary); color: white;">Save</button>
+          <button class="btn outline" id="sNext">Next →</button>
+        </div>
+        <div id="sList"></div>
+      </div>
+    </section>
+
+    <!-- ── BROWSE ────────────────────────────────────────────────── -->
+    <section class="panel" data-panel="browse">
+      <div class="search">
+        <input id="searchInput" placeholder="Search 80+ words — English, transliteration, Arabic…" />
+      </div>
+      <div class="category-chips" id="browseChips" style="margin-bottom:14px;"></div>
+      <div class="word-list" id="wordList"></div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <div class="modal-emoji" id="modalEmoji">🎉</div>
+      <div class="modal-title" id="modalTitle">Level up!</div>
+      <div class="modal-desc" id="modalDesc">You reached level 2. Keep going!</div>
+      <button class="btn primary" style="background: var(--primary); color:white;" id="modalClose">Continue</button>
+    </div>
+  </div>
+
+<script src="vocab.js"></script>
+<script>
+(() => {
+  // ── Storage ────────────────────────────────────────────────────
+  const STATE_KEY = 'masri_state_v1';
+  const defaultState = {
+    xp: 0,
+    streak: 0,
+    lastActive: null,
+    mastery: {},        // id -> level 0..5
+    lastReview: {},     // id -> ISO date
+    sentences: {},      // id -> [strings]
+    activeCat: 'All',
+    theme: null,
+    typeIdx: 0,
+    sentenceIdx: 0,
+    learnIdx: 0,
+  };
+  const S = Object.assign({}, defaultState, JSON.parse(localStorage.getItem(STATE_KEY) || '{}'));
+  const save = () => localStorage.setItem(STATE_KEY, JSON.stringify(S));
+
+  // ── Theme ──────────────────────────────────────────────────────
+  const applyTheme = () => {
+    if (S.theme) document.documentElement.setAttribute('data-theme', S.theme);
+    else document.documentElement.removeAttribute('data-theme');
+  };
+  applyTheme();
+  document.getElementById('themeBtn').onclick = () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    S.theme = cur === 'dark' ? 'light' : (cur === 'light' ? null : 'dark');
+    applyTheme(); save();
+  };
+
+  // ── Streak ─────────────────────────────────────────────────────
+  const today = () => new Date().toISOString().slice(0,10);
+  const yesterday = () => {
+    const d = new Date(); d.setDate(d.getDate() - 1);
+    return d.toISOString().slice(0,10);
+  };
+  const bumpStreak = () => {
+    const t = today();
+    if (S.lastActive === t) return;
+    if (S.lastActive === yesterday()) S.streak++;
+    else S.streak = 1;
+    S.lastActive = t;
+    save();
+    renderStats();
+    toast('Streak: ' + S.streak + ' day' + (S.streak > 1 ? 's' : '') + ' 🔥');
+  };
+
+  // ── XP & level ─────────────────────────────────────────────────
+  const levelFor = xp => Math.floor(Math.sqrt(xp / 25)) + 1;
+  const xpForLevel = l => 25 * (l - 1) ** 2;
+  const addXP = (n, reason) => {
+    const before = levelFor(S.xp);
+    S.xp += n;
+    const after = levelFor(S.xp);
+    save();
+    renderStats();
+    if (after > before) {
+      showModal('🏆', 'Level ' + after + '!', 'You just leveled up. Keep the streak going.');
+      confetti();
+    } else if (reason) {
+      toast('+' + n + ' XP · ' + reason);
+    }
+  };
+
+  const renderStats = () => {
+    document.getElementById('streakN').textContent = S.streak;
+    document.getElementById('xpN').textContent = S.xp;
+    document.getElementById('dashLevel').textContent = levelFor(S.xp);
+    const seen = Object.keys(S.mastery).length;
+    const total = VOCAB.length;
+    const mastered = Object.values(S.mastery).filter(v => v >= 4).length;
+    document.getElementById('dashSeen').textContent = seen;
+    document.getElementById('dashMastered').textContent = mastered;
+    document.getElementById('dashBarSeen').style.width = Math.round(seen / total * 100) + '%';
+    document.getElementById('dashBarMastered').style.width = Math.round(mastered / total * 100) + '%';
+    document.getElementById('dashDue').textContent = dueCards().length;
+  };
+
+  // ── SRS: due cards ─────────────────────────────────────────────
+  const intervalsDays = [0, 1, 2, 4, 7, 14, 30];
+  const isDue = id => {
+    const lvl = S.mastery[id] ?? 0;
+    const last = S.lastReview[id];
+    if (!last) return true;
+    const days = (Date.now() - new Date(last).getTime()) / 86400000;
+    return days >= intervalsDays[Math.min(lvl, intervalsDays.length - 1)];
+  };
+  const dueCards = () => VOCAB.filter(v => isDue(v.id));
+
+  // ── Category chips ─────────────────────────────────────────────
+  const cats = ['All', ...new Set(VOCAB.map(v => v.cat))];
+  const renderChips = (containerId, onPick) => {
+    const c = document.getElementById(containerId);
+    c.innerHTML = '';
+    cats.forEach(cat => {
+      const count = cat === 'All' ? VOCAB.length : VOCAB.filter(v => v.cat === cat).length;
+      const b = document.createElement('button');
+      b.className = 'chip' + (cat === S.activeCat ? ' active' : '');
+      b.innerHTML = cat + ' <span class="count">' + count + '</span>';
+      b.onclick = () => { S.activeCat = cat; save(); onPick(cat); document.querySelectorAll('#' + containerId + ' .chip').forEach(x => x.classList.remove('active')); b.classList.add('active'); };
+      c.appendChild(b);
+    });
+  };
+
+  const filtered = () => S.activeCat === 'All' ? VOCAB : VOCAB.filter(v => v.cat === S.activeCat);
+
+  // ── Toast & modal ──────────────────────────────────────────────
+  let toastTimer;
+  const toast = (msg, gold) => {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.toggle('gold', !!gold); t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+  };
+  const showModal = (emoji, title, desc) => {
+    document.getElementById('modalEmoji').textContent = emoji;
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalDesc').textContent = desc;
+    document.getElementById('modal').classList.add('show');
+  };
+  document.getElementById('modalClose').onclick = () => document.getElementById('modal').classList.remove('show');
+  const confetti = () => {
+    const wrap = document.createElement('div');
+    wrap.className = 'confetti';
+    const colors = ['#C64F1F', '#D4A24C', '#0F5E5C', '#F0D9A8', '#2E7D5B'];
+    for (let i = 0; i < 60; i++) {
+      const el = document.createElement('i');
+      el.style.left = Math.random() * 100 + '%';
+      el.style.background = colors[i % colors.length];
+      el.style.animationDelay = (Math.random() * 0.3) + 's';
+      el.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+      wrap.appendChild(el);
+    }
+    document.body.appendChild(wrap);
+    setTimeout(() => wrap.remove(), 2200);
+  };
+
+  // ── TTS ────────────────────────────────────────────────────────
+  let voices = [];
+  const loadVoices = () => { voices = speechSynthesis.getVoices(); };
+  if ('speechSynthesis' in window) {
+    loadVoices();
+    speechSynthesis.onvoiceschanged = loadVoices;
+  }
+  const speak = (text) => {
+    if (!('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    const ar = voices.find(v => v.lang && (v.lang.toLowerCase().startsWith('ar-eg') || v.lang.toLowerCase() === 'ar' || v.lang.toLowerCase().startsWith('ar-'))) ;
+    if (ar) u.voice = ar;
+    u.lang = ar ? ar.lang : 'ar-EG';
+    u.rate = 0.85;
+    speechSynthesis.speak(u);
+  };
+
+  // ── Tab nav ────────────────────────────────────────────────────
+  const showPanel = (name) => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.panel === name));
+    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.dataset.panel === name));
+    if (name === 'learn') startLearn();
+    if (name === 'quiz') startQuiz();
+    if (name === 'type') renderType();
+    if (name === 'sentences') renderSentence();
+    if (name === 'browse') renderBrowse();
+  };
+  document.querySelectorAll('.tab').forEach(t => t.onclick = () => showPanel(t.dataset.panel));
+  document.querySelectorAll('[data-goto]').forEach(b => b.onclick = () => showPanel(b.dataset.goto));
+
+  // ── LEARN (flashcards) ─────────────────────────────────────────
+  let learnDeck = [], learnIdx = 0, flipped = false;
+  const startLearn = () => {
+    let source = filtered();
+    // prioritize due cards
+    learnDeck = [...source].sort((a, b) => (isDue(b.id) ? 1 : 0) - (isDue(a.id) ? 1 : 0));
+    learnIdx = Math.min(S.learnIdx || 0, Math.max(0, learnDeck.length - 1));
+    flipped = false;
+    renderCard();
+    document.getElementById('learnMeta').textContent = learnDeck.length + ' cards · ' + dueCards().length + ' due';
+  };
+
+  const renderCard = () => {
+    if (!learnDeck.length) return;
+    const w = learnDeck[learnIdx];
+    if (!w) return;
+    const flash = document.getElementById('flash');
+    flash.classList.toggle('flipped', flipped);
+    document.getElementById('fCat').textContent = w.cat;
+    document.getElementById('fCatBack').textContent = w.cat;
+    document.getElementById('fIdx').textContent = (learnIdx + 1) + ' / ' + learnDeck.length;
+    document.getElementById('fIdxBack').textContent = (learnIdx + 1) + ' / ' + learnDeck.length;
+    document.getElementById('fEn').textContent = w.en;
+    document.getElementById('fAr').textContent = w.ar;
+    document.getElementById('fTl').textContent = w.tl;
+    const exEl = document.getElementById('fEx');
+    if (w.ex) {
+      exEl.style.display = '';
+      document.getElementById('fExAr').textContent = w.ex.ar;
+      document.getElementById('fExTl').textContent = w.ex.tl;
+      document.getElementById('fExEn').textContent = w.ex.en;
+    } else exEl.style.display = 'none';
+    document.getElementById('learnBar').style.width = ((learnIdx) / Math.max(learnDeck.length, 1) * 100) + '%';
+  };
+
+  document.getElementById('flash').onclick = () => { flipped = !flipped; renderCard(); };
+  document.getElementById('fSpeak').onclick = (e) => { e.stopPropagation(); speak(learnDeck[learnIdx].ar); };
+
+  const rate = (delta) => {
+    const w = learnDeck[learnIdx];
+    if (!w) return;
+    const cur = S.mastery[w.id] ?? 0;
+    S.mastery[w.id] = Math.max(0, Math.min(5, cur + delta));
+    S.lastReview[w.id] = new Date().toISOString();
+    addXP(delta > 0 ? 5 : 2, delta > 0 ? 'You got it!' : 'Practice makes progress');
+    bumpStreak();
+    learnIdx++; flipped = false;
+    S.learnIdx = learnIdx;
+    save();
+    if (learnIdx >= learnDeck.length) {
+      document.getElementById('learnBar').style.width = '100%';
+      showModal('🎉', 'Deck done!', 'You reviewed ' + learnDeck.length + ' cards. Ready for a quiz?');
+      confetti();
+      learnIdx = 0; S.learnIdx = 0; save();
+    }
+    renderCard();
+    renderStats();
+  };
+  document.getElementById('btnAgain').onclick = () => rate(-1);
+  document.getElementById('btnHard').onclick  = () => rate(0);
+  document.getElementById('btnGood').onclick  = () => rate(1);
+  document.getElementById('btnShuffle').onclick = () => {
+    learnDeck = learnDeck.slice().sort(() => Math.random() - 0.5);
+    learnIdx = 0; S.learnIdx = 0; save(); flipped = false; renderCard();
+    toast('Shuffled 🔀');
+  };
+  document.getElementById('btnFilter').onclick = () => {
+    const c = document.getElementById('learnChips');
+    c.style.display = c.style.display === 'none' ? '' : 'none';
+  };
+  renderChips('learnChips', () => startLearn());
+  renderChips('homeChips', (cat) => { showPanel('learn'); });
+
+  // ── QUIZ ───────────────────────────────────────────────────────
+  let quiz = { deck: [], i: 0, score: 0, current: null, kind: 'en2ar' };
+  const startQuiz = () => {
+    const pool = filtered();
+    const size = Math.min(10, pool.length);
+    quiz.deck = [...pool].sort(() => Math.random() - 0.5).slice(0, size);
+    quiz.i = 0; quiz.score = 0;
+    document.getElementById('qTotal').textContent = size;
+    nextQuiz();
+  };
+  const nextQuiz = () => {
+    if (quiz.i >= quiz.deck.length) {
+      document.getElementById('quizBar').style.width = '100%';
+      showModal('✨', quiz.score + '/' + quiz.deck.length + ' correct', quiz.score === quiz.deck.length ? 'Perfect run — that was clean.' : (quiz.score >= quiz.deck.length * 0.7 ? 'Nice work! Keep going.' : 'Good push — the tricky ones will come back to you.'));
+      if (quiz.score === quiz.deck.length) confetti();
+      return;
+    }
+    const w = quiz.deck[quiz.i];
+    quiz.current = w;
+    quiz.kind = Math.random() > 0.5 ? 'en2ar' : 'ar2en';
+    document.getElementById('qNum').textContent = quiz.i + 1;
+    document.getElementById('qScore').textContent = quiz.score;
+    document.getElementById('quizBar').style.width = (quiz.i / quiz.deck.length * 100) + '%';
+    const opts = pickDistractors(w, 3);
+    if (quiz.kind === 'en2ar') {
+      document.getElementById('qKind').textContent = 'Which is the Egyptian Arabic for…';
+      document.getElementById('qWord').textContent = w.en;
+      document.getElementById('qWord').className = 'word';
+      document.getElementById('qSpeak').style.display = 'none';
+      const all = shuffle([w, ...opts]);
+      const cont = document.getElementById('qOpts');
+      cont.innerHTML = '';
+      all.forEach((o, idx) => {
+        const el = document.createElement('button');
+        el.className = 'option ar';
+        el.innerHTML = '<span>' + o.ar + '  <span style="font-size:13px; color: var(--muted); direction:ltr; unicode-bidi: isolate;">· ' + o.tl + '</span></span><span class="kb">' + (idx + 1) + '</span>';
+        el.onclick = () => answerQuiz(el, o, w);
+        cont.appendChild(el);
+      });
+    } else {
+      document.getElementById('qKind').textContent = 'What does this mean?';
+      document.getElementById('qWord').textContent = w.ar;
+      document.getElementById('qWord').className = 'word ar';
+      document.getElementById('qSpeak').style.display = '';
+      document.getElementById('qSpeak').onclick = () => speak(w.ar);
+      const all = shuffle([w, ...opts]);
+      const cont = document.getElementById('qOpts');
+      cont.innerHTML = '';
+      all.forEach((o, idx) => {
+        const el = document.createElement('button');
+        el.className = 'option';
+        el.innerHTML = '<span>' + o.en + '</span><span class="kb">' + (idx + 1) + '</span>';
+        el.onclick = () => answerQuiz(el, o, w);
+        cont.appendChild(el);
+      });
+    }
+  };
+  const answerQuiz = (btn, chosen, correct) => {
+    const buttons = document.querySelectorAll('#qOpts .option');
+    buttons.forEach(b => b.classList.add('disabled'));
+    const correctText = quiz.kind === 'en2ar' ? correct.ar : correct.en;
+    buttons.forEach(b => {
+      const t = b.querySelector('span').textContent;
+      if (t.trim().startsWith(correctText)) b.classList.add('correct');
+    });
+    if (chosen.id === correct.id) {
+      btn.classList.add('correct');
+      quiz.score++;
+      addXP(6, 'Correct!');
+      const cur = S.mastery[correct.id] ?? 0;
+      S.mastery[correct.id] = Math.min(5, cur + 1);
+    } else {
+      btn.classList.add('wrong');
+      addXP(1);
+      const cur = S.mastery[correct.id] ?? 0;
+      S.mastery[correct.id] = Math.max(0, cur - 1);
+      speak(correct.ar);
+    }
+    S.lastReview[correct.id] = new Date().toISOString();
+    save();
+    bumpStreak();
+    document.getElementById('qScore').textContent = quiz.score;
+    setTimeout(() => { quiz.i++; nextQuiz(); }, 900);
+  };
+  const pickDistractors = (w, n) => {
+    const same = VOCAB.filter(x => x.cat === w.cat && x.id !== w.id);
+    const other = VOCAB.filter(x => x.cat !== w.cat && x.id !== w.id);
+    const pool = shuffle([...same, ...other]);
+    return pool.slice(0, n);
+  };
+  const shuffle = (a) => a.slice().sort(() => Math.random() - 0.5);
+  document.getElementById('qSpeak').onclick = () => quiz.current && speak(quiz.current.ar);
+
+  // ── TYPE ───────────────────────────────────────────────────────
+  const typeDeck = () => filtered();
+  const renderType = () => {
+    const deck = typeDeck();
+    if (!deck.length) return;
+    S.typeIdx = S.typeIdx % deck.length;
+    const w = deck[S.typeIdx];
+    document.getElementById('tEn').textContent = w.en;
+    document.getElementById('tHint').textContent = '';
+    document.getElementById('tInput').value = '';
+    document.getElementById('tFb').className = 'type-feedback';
+    document.getElementById('tFb').textContent = '';
+    setTimeout(() => document.getElementById('tInput').focus(), 30);
+  };
+  const normalize = s => s.toLowerCase().replace(/[’'`]/g, "'").replace(/\s+/g, '').replace(/[éè]/g, 'e');
+  const checkType = () => {
+    const deck = typeDeck();
+    const w = deck[S.typeIdx];
+    const val = document.getElementById('tInput').value.trim();
+    const fb = document.getElementById('tFb');
+    // Accept transliteration or Arabic script
+    const target1 = normalize(w.tl);
+    const target2 = w.ar.trim();
+    const val2 = val;
+    if (normalize(val) === target1 || val2 === target2) {
+      fb.className = 'type-feedback ok';
+      fb.innerHTML = 'Correct! <b>' + w.ar + '</b> · ' + w.tl;
+      addXP(5, 'Nailed it');
+      const cur = S.mastery[w.id] ?? 0; S.mastery[w.id] = Math.min(5, cur + 1);
+      S.lastReview[w.id] = new Date().toISOString();
+      bumpStreak(); save();
+      speak(w.ar);
+    } else {
+      fb.className = 'type-feedback bad';
+      fb.innerHTML = 'Not quite — it\'s <b>' + w.tl + '</b> (<span style="font-family:Amiri,serif;font-size:18px;">' + w.ar + '</span>)';
+      const cur = S.mastery[w.id] ?? 0; S.mastery[w.id] = Math.max(0, cur - 1);
+      S.lastReview[w.id] = new Date().toISOString();
+      save();
+    }
+  };
+  document.getElementById('tCheck').onclick = checkType;
+  document.getElementById('tInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); checkType(); }
+  });
+  document.getElementById('tHintBtn').onclick = () => {
+    const w = typeDeck()[S.typeIdx];
+    document.getElementById('tHint').textContent = 'Starts with "' + w.tl[0] + '" · ' + w.tl.length + ' letters';
+  };
+  document.getElementById('tNext').onclick = () => { S.typeIdx = (S.typeIdx + 1) % typeDeck().length; save(); renderType(); };
+
+  // ── SENTENCES ──────────────────────────────────────────────────
+  const sDeck = () => filtered();
+  const renderSentence = () => {
+    const deck = sDeck();
+    if (!deck.length) return;
+    S.sentenceIdx = S.sentenceIdx % deck.length;
+    const w = deck[S.sentenceIdx];
+    document.getElementById('sEn').textContent = w.en;
+    document.getElementById('sTl').textContent = w.tl;
+    document.getElementById('sAr').textContent = w.ar;
+    document.getElementById('sExampleAr').textContent = w.ex ? w.ex.ar : '—';
+    document.getElementById('sExampleTl').textContent = w.ex ? w.ex.tl : '';
+    document.getElementById('sExampleEn').textContent = w.ex ? w.ex.en : '';
+    document.getElementById('sInput').value = '';
+    renderSentenceList(w);
+  };
+  const renderSentenceList = (w) => {
+    const list = document.getElementById('sList');
+    list.innerHTML = '';
+    const arr = S.sentences[w.id] || [];
+    if (!arr.length) return;
+    const h = document.createElement('div');
+    h.className = 'lbl muted';
+    h.style.cssText = 'text-transform:uppercase; font-size:11px; letter-spacing:.1em; margin-top:14px;';
+    h.textContent = 'Your sentences (' + arr.length + ')';
+    list.appendChild(h);
+    arr.forEach((s, i) => {
+      const row = document.createElement('div');
+      row.className = 'my-sentence';
+      row.textContent = s;
+      const del = document.createElement('button');
+      del.className = 'del'; del.textContent = '×';
+      del.onclick = () => { arr.splice(i, 1); S.sentences[w.id] = arr; save(); renderSentenceList(w); };
+      row.appendChild(del);
+      const speak2 = document.createElement('button');
+      speak2.className = 'del'; speak2.textContent = '🔊';
+      speak2.style.left = 'auto'; speak2.style.right = '8px';
+      speak2.onclick = () => speak(s);
+      row.appendChild(speak2);
+      list.appendChild(row);
+    });
+  };
+  document.getElementById('sSave').onclick = () => {
+    const w = sDeck()[S.sentenceIdx];
+    const val = document.getElementById('sInput').value.trim();
+    if (!val) { toast('Type a sentence first ✍️'); return; }
+    if (!S.sentences[w.id]) S.sentences[w.id] = [];
+    S.sentences[w.id].push(val);
+    addXP(8, 'Sentence saved');
+    bumpStreak(); save(); renderSentence();
+  };
+  document.getElementById('sNext').onclick = () => { S.sentenceIdx = (S.sentenceIdx + 1) % sDeck().length; save(); renderSentence(); };
+  document.getElementById('sPrev').onclick = () => { S.sentenceIdx = (S.sentenceIdx - 1 + sDeck().length) % sDeck().length; save(); renderSentence(); };
+  document.getElementById('sSpeakEx').onclick = () => { const w = sDeck()[S.sentenceIdx]; if (w.ex) speak(w.ex.ar); };
+  document.getElementById('sSpeakMine').onclick = () => { const val = document.getElementById('sInput').value.trim(); if (val) speak(val); };
+
+  // ── BROWSE ─────────────────────────────────────────────────────
+  const renderBrowse = () => {
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    const list = document.getElementById('wordList');
+    list.innerHTML = '';
+    let arr = filtered();
+    if (q) arr = arr.filter(w => w.en.toLowerCase().includes(q) || w.tl.toLowerCase().includes(q) || w.ar.includes(q) || w.cat.toLowerCase().includes(q));
+    if (!arr.length) { list.innerHTML = '<div class="empty">Nothing matches. Try another word.</div>'; return; }
+    arr.forEach(w => {
+      const row = document.createElement('div');
+      row.className = 'word-row';
+      const dots = (n) => {
+        const total = 5;
+        let out = '<span class="mastery-dots">';
+        for (let i = 0; i < total; i++) out += '<span class="' + (i < n ? 'on' : '') + '"></span>';
+        return out + '</span>';
+      };
+      const m = S.mastery[w.id] ?? 0;
+      row.innerHTML =
+        '<div><div class="top"><span class="en">' + w.en + '</span><span class="tl">' + w.tl + '</span></div><div class="cat">' + w.cat + '</div></div>' +
+        '<div class="ar">' + w.ar + '</div>' +
+        '<div class="mastery">' + dots(m) + '</div>';
+      row.onclick = () => speak(w.ar);
+      list.appendChild(row);
+    });
+  };
+  document.getElementById('searchInput').addEventListener('input', renderBrowse);
+  renderChips('browseChips', () => renderBrowse());
+
+  // ── Keyboard ───────────────────────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+    const activePanel = document.querySelector('.panel.active').dataset.panel;
+    if (activePanel === 'learn') {
+      if (e.code === 'Space') { e.preventDefault(); flipped = !flipped; renderCard(); }
+      if (e.key === 'ArrowRight' || e.key === '3') rate(1);
+      if (e.key === 'ArrowLeft' || e.key === '1') rate(-1);
+      if (e.key === '2') rate(0);
+    }
+    if (activePanel === 'quiz') {
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= 4) {
+        const b = document.querySelectorAll('#qOpts .option')[n - 1];
+        if (b && !b.classList.contains('disabled')) b.click();
+      }
+    }
+  });
+
+  // ── Init ───────────────────────────────────────────────────────
+  renderStats();
+  startLearn(); // preload
+})();
+</script>
+</body>
+</html>
