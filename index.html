@@ -200,6 +200,74 @@ input:focus-visible, textarea:focus-visible { outline: 2px solid var(--focus); o
 }
 .theme-toggle:hover { border-color: var(--ink); color: var(--ink); }
 
+/* ── Voice panel ──────────────────────────────────────────────── */
+.voice-panel {
+  border: var(--rule-w) solid var(--rule-2);
+  border-top: none;
+  background: var(--paper-2);
+  padding: var(--space-4) var(--space-5);
+  display: grid;
+  gap: var(--space-3);
+  animation: slideDown var(--dur-med) var(--ease-out);
+}
+@keyframes slideDown { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.vp-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: var(--space-4);
+  align-items: center;
+  min-width: 0;
+}
+.vp-row-actions { grid-template-columns: 1fr auto; }
+.vp-lbl {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+.vp-lbl .vp-val { color: var(--accent-ink); margin-left: var(--space-2); font-variant-numeric: tabular-nums; }
+.vp-select {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  padding: 6px 8px;
+  border: var(--rule-w) solid var(--rule-2);
+  background: var(--paper);
+  color: var(--ink);
+  width: 100%;
+  min-width: 0;
+}
+.vp-select:focus { outline: none; border-color: var(--accent); }
+.vp-range {
+  width: 100%;
+  accent-color: var(--accent);
+}
+.vp-note {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.vp-note.warn { color: var(--rust); }
+@media (max-width: 520px) {
+  .vp-row { grid-template-columns: 1fr; gap: var(--space-1); }
+  .vp-row-actions { grid-template-columns: 1fr; }
+}
+
+/* Play button variants */
+.play-btn.slow { padding: 6px 10px; }
+.play-btn .glyph.slow { border-left-width: 6px; }
+.play-btn .glyph.slow::after {
+  content: ""; display: inline-block; width: 8px; height: 6px; margin-left: 4px;
+  border-left: 6px solid currentColor;
+  border-top: 4px solid transparent; border-bottom: 4px solid transparent;
+}
+
+.play-cluster { display: inline-flex; gap: var(--space-2); align-self: flex-start; }
+
 /* ── Nav ──────────────────────────────────────────────────────── */
 nav.tabs {
   display: flex;
@@ -1051,9 +1119,26 @@ nav.tabs::-webkit-scrollbar { display: none; }
       <span><span class="lbl">Streak</span><span class="val" id="streakN">0</span></span>
       <span><span class="lbl">XP</span><span class="val accent" id="xpN">0</span></span>
       <span><span class="lbl">Lvl</span><span class="val" id="lvlN">1</span></span>
+      <button class="theme-toggle" id="voiceBtn" title="Voice settings">Voice</button>
       <button class="theme-toggle" id="themeBtn" title="Toggle theme">Theme</button>
     </div>
   </header>
+
+  <!-- ── Voice panel ──────────────────────────────────────────── -->
+  <div class="voice-panel hidden" id="voicePanel">
+    <div class="vp-row">
+      <label class="vp-lbl" for="voiceSelect">Voice</label>
+      <select class="vp-select" id="voiceSelect"></select>
+    </div>
+    <div class="vp-row">
+      <label class="vp-lbl" for="rateRange">Rate <span class="vp-val" id="rateVal">0.80</span></label>
+      <input class="vp-range" id="rateRange" type="range" min="0.5" max="1.1" step="0.05" value="0.8" />
+    </div>
+    <div class="vp-row vp-row-actions">
+      <div class="vp-note" id="voiceNote"></div>
+      <button class="text-link secondary" id="voiceTest" type="button">Test · قهوة</button>
+    </div>
+  </div>
 
   <!-- ── Tabs ─────────────────────────────────────────────────── -->
   <nav class="tabs" role="tablist" aria-label="Study modes">
@@ -1141,7 +1226,10 @@ nav.tabs::-webkit-scrollbar { display: none; }
             <div class="word-ar" id="fAr">—</div>
             <div class="tl" id="fTl">—</div>
           </div>
-          <button class="play-btn" id="fSpeak" type="button"><span class="glyph"></span> Play</button>
+          <div class="play-cluster">
+            <button class="play-btn" id="fSpeak" type="button"><span class="glyph"></span> Play</button>
+            <button class="play-btn slow" id="fSpeakSlow" type="button" title="Slow"><span class="glyph slow"></span> Slow</button>
+          </div>
           <div class="example-block" id="fEx" hidden>
             <div class="lbl">Example</div>
             <div class="ex-ar" id="fExAr"></div>
@@ -1223,7 +1311,10 @@ nav.tabs::-webkit-scrollbar { display: none; }
         <div class="ex-ar" id="sExampleAr"></div>
         <div class="ex-tl" id="sExampleTl"></div>
         <div class="ex-en" id="sExampleEn"></div>
-        <button class="play-btn" id="sSpeakEx" type="button" style="margin-top:6px;"><span class="glyph"></span> Play example</button>
+        <div class="play-cluster" style="margin-top:6px;">
+          <button class="play-btn" id="sSpeakEx" type="button"><span class="glyph"></span> Play example</button>
+          <button class="play-btn slow" id="sSpeakExSlow" type="button"><span class="glyph slow"></span> Slow</button>
+        </div>
       </div>
       <label class="field-label" for="sInput">Your sentence</label>
       <textarea class="sentence-input" id="sInput" placeholder="اكتب جملة بالكلمة دي..."></textarea>
@@ -1276,6 +1367,7 @@ nav.tabs::-webkit-scrollbar { display: none; }
     mastery: {}, lastReview: {}, sentences: {},
     activeCat: 'All', theme: null,
     typeIdx: 0, sentenceIdx: 0, learnIdx: 0,
+    voiceURI: null, rate: 0.8,
   };
   let S;
   try {
@@ -1408,24 +1500,158 @@ nav.tabs::-webkit-scrollbar { display: none; }
   document.getElementById('modalClose').onclick = () => document.getElementById('modal').classList.remove('show');
 
   // ── TTS ────────────────────────────────────────────────────
+  // Voice quality is largely a function of the OS voice the user has installed.
+  // We rank Arabic voices by known-good names, prefer ar-EG, and let the user override.
   let voices = [];
-  const loadVoices = () => { try { voices = speechSynthesis.getVoices(); } catch {} };
+  const PREFERRED_NAMES = [
+    // best-known Egyptian & MSA voices, roughly in quality order
+    /zeina/i, /majed/i, /maged/i, /salma/i,          // Apple
+    /google.*(العربية|arabic)/i, /google/i,          // Chrome / Android (usually top-tier)
+    /microsoft.*hoda/i, /microsoft.*naayf/i,         // Windows online
+    /microsoft.*salma/i, /microsoft.*shakir/i, /microsoft.*hamed/i,
+    /tarik/i,                                        // legacy Windows
+    /premium/i, /enhanced/i, /neural/i,              // any voice tagged premium
+  ];
+
+  const rankVoice = (v) => {
+    const name = (v.name || '') + ' ' + (v.voiceURI || '');
+    const lang = (v.lang || '').toLowerCase();
+    let score = 0;
+    if (lang.startsWith('ar-eg')) score += 100;
+    else if (lang.startsWith('ar')) score += 50;
+    else return -1; // non-Arabic
+    for (let i = 0; i < PREFERRED_NAMES.length; i++) {
+      if (PREFERRED_NAMES[i].test(name)) { score += 40 - i * 2; break; }
+    }
+    if (v.localService) score += 5;
+    return score;
+  };
+
+  const arabicVoices = () => voices.filter(v => (v.lang || '').toLowerCase().startsWith('ar'));
+
+  const bestVoice = () => {
+    const ar = arabicVoices();
+    if (!ar.length) return null;
+    return ar.map(v => ({ v, s: rankVoice(v) })).sort((a, b) => b.s - a.s)[0].v;
+  };
+
+  const currentVoice = () => {
+    if (!voices.length) return null;
+    if (S.voiceURI) {
+      const found = voices.find(v => v.voiceURI === S.voiceURI);
+      if (found) return found;
+    }
+    return bestVoice();
+  };
+
+  const renderVoicePanel = () => {
+    const sel = document.getElementById('voiceSelect');
+    const note = document.getElementById('voiceNote');
+    const rateVal = document.getElementById('rateVal');
+    if (!sel) return;
+    sel.innerHTML = '';
+    const ar = arabicVoices();
+    if (!ar.length) {
+      const opt = document.createElement('option');
+      opt.value = ''; opt.textContent = 'No Arabic voice installed on this device';
+      sel.appendChild(opt);
+      sel.disabled = true;
+      note.className = 'vp-note warn';
+      note.textContent = 'Install an Arabic system voice for real audio · macOS: System Settings → Accessibility → Spoken Content → Voices → Arabic → download "Maged" or "Zeina" (premium). iOS: Settings → Accessibility → Spoken Content → Voices → Arabic.';
+      return;
+    }
+    sel.disabled = false;
+    const scored = ar.map(v => ({ v, s: rankVoice(v) })).sort((a, b) => b.s - a.s);
+    const cur = currentVoice();
+    scored.forEach(({ v, s }) => {
+      const opt = document.createElement('option');
+      opt.value = v.voiceURI;
+      const tag = s >= 100 ? ' · EG' : (v.lang || '').toUpperCase();
+      const q = /google|premium|enhanced|neural|zeina|majed|maged|salma/i.test(v.name) ? ' ★' : '';
+      opt.textContent = v.name + '  ·  ' + tag + q;
+      if (cur && v.voiceURI === cur.voiceURI) opt.selected = true;
+      sel.appendChild(opt);
+    });
+    const c = cur;
+    note.className = 'vp-note';
+    if (c) {
+      const isEG = (c.lang || '').toLowerCase().startsWith('ar-eg');
+      const isGood = /google|premium|enhanced|neural|zeina|majed|maged|salma/i.test(c.name);
+      note.textContent = isEG && isGood ? 'Egyptian voice · high quality'
+        : isEG ? 'Egyptian voice'
+        : isGood ? 'MSA voice · not Egyptian, but clear'
+        : 'MSA voice · consider installing an Egyptian voice for better dialect';
+    }
+    rateVal.textContent = (S.rate ?? 0.8).toFixed(2);
+    document.getElementById('rateRange').value = String(S.rate ?? 0.8);
+  };
+
+  const loadVoices = () => {
+    try {
+      voices = speechSynthesis.getVoices() || [];
+      renderVoicePanel();
+    } catch {}
+  };
   if ('speechSynthesis' in window) {
     loadVoices();
     speechSynthesis.onvoiceschanged = loadVoices;
+    // Safari sometimes returns voices only after a delay
+    setTimeout(loadVoices, 400);
+    setTimeout(loadVoices, 1200);
   }
-  const speak = (text) => {
+
+  // Break long Arabic text into short clauses. Some voices sound
+  // much better on short chunks — they re-set prosody each phrase.
+  const chunkArabic = (text) => {
+    return text
+      .split(/([،؛؟!.·—\-]|\s{2,})/)
+      .map(s => s && s.trim())
+      .filter(Boolean);
+  };
+
+  let speakQueue = [];
+  const speak = (text, opts = {}) => {
     if (!('speechSynthesis' in window)) return;
     try {
       speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      const ar = voices.find(v => v.lang && (v.lang.toLowerCase().startsWith('ar-eg') || v.lang.toLowerCase().startsWith('ar')));
-      if (ar) u.voice = ar;
-      u.lang = ar ? ar.lang : 'ar-EG';
-      u.rate = 0.85;
-      speechSynthesis.speak(u);
+      speakQueue = [];
+      const v = currentVoice();
+      const rate = (opts.slow ? 0.55 : (S.rate ?? 0.8));
+      const chunks = chunkArabic(text);
+      const speakOne = (i) => {
+        if (i >= chunks.length) return;
+        const u = new SpeechSynthesisUtterance(chunks[i]);
+        if (v) u.voice = v;
+        u.lang = v ? v.lang : 'ar-EG';
+        u.rate = rate;
+        u.pitch = 1.0;
+        u.onend = () => speakOne(i + 1);
+        u.onerror = () => speakOne(i + 1);
+        speakQueue.push(u);
+        speechSynthesis.speak(u);
+      };
+      speakOne(0);
     } catch {}
   };
+  const speakSlow = (text) => speak(text, { slow: true });
+
+  // Voice panel wiring
+  const voicePanel = document.getElementById('voicePanel');
+  document.getElementById('voiceBtn').onclick = () => {
+    voicePanel.classList.toggle('hidden');
+    if (!voicePanel.classList.contains('hidden')) renderVoicePanel();
+  };
+  document.getElementById('voiceSelect').addEventListener('change', (e) => {
+    S.voiceURI = e.target.value || null;
+    save();
+    renderVoicePanel();
+  });
+  document.getElementById('rateRange').addEventListener('input', (e) => {
+    S.rate = parseFloat(e.target.value);
+    document.getElementById('rateVal').textContent = S.rate.toFixed(2);
+    save();
+  });
+  document.getElementById('voiceTest').onclick = () => speak('قهوة بسكر من فضلك');
 
   // ── Navigation ─────────────────────────────────────────────
   const showPanel = (name) => {
@@ -1476,6 +1702,7 @@ nav.tabs::-webkit-scrollbar { display: none; }
   document.getElementById('flash').onclick = () => { flipped = !flipped; renderCard(); };
   document.getElementById('flash').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flipped = !flipped; renderCard(); } });
   document.getElementById('fSpeak').onclick = (e) => { e.stopPropagation(); speak(learnDeck[learnIdx].ar); };
+  document.getElementById('fSpeakSlow').onclick = (e) => { e.stopPropagation(); speakSlow(learnDeck[learnIdx].ar); };
   const rate = (delta) => {
     const w = learnDeck[learnIdx];
     if (!w) return;
@@ -1697,6 +1924,7 @@ nav.tabs::-webkit-scrollbar { display: none; }
   document.getElementById('sNext').onclick = () => { S.sentenceIdx = (S.sentenceIdx + 1) % sDeck().length; save(); renderSentence(); };
   document.getElementById('sPrev').onclick = () => { S.sentenceIdx = (S.sentenceIdx - 1 + sDeck().length) % sDeck().length; save(); renderSentence(); };
   document.getElementById('sSpeakEx').onclick = () => { const w = sDeck()[S.sentenceIdx]; if (w.ex) speak(w.ex.ar); };
+  document.getElementById('sSpeakExSlow').onclick = () => { const w = sDeck()[S.sentenceIdx]; if (w.ex) speakSlow(w.ex.ar); };
   document.getElementById('sSpeakMine').onclick = () => { const val = document.getElementById('sInput').value.trim(); if (val) speak(val); };
 
   // ── BROWSE ─────────────────────────────────────────────────
